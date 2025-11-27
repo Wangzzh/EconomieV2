@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg6aaewlsase"]
+
+[ext_resource type="Script" uid="uid://bnpbmee0m2j7h" path="res://test/SimpleProducerConsumer.cs" id="1_y8lgp"]
+[ext_resource type="Script" uid="uid://ch63nlvhx3esl" path="res://test/DualProducer.cs" id="2_3sola"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SimpleProducerConsumerButton" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 115.0
+offset_bottom = 43.0
+text = "Simple Consumer and Producer"
+
+[node name="SimpleProducerConsumerSetup" type="Node" parent="."]
+script = ExtResource("1_y8lgp")
+
+[node name="DualProducer" type="Button" parent="."]
+offset_left = 15.0
+offset_top = 57.0
+offset_right = 268.0
+offset_bottom = 88.0
+text = "Dual Producer"
+
+[node name="DualProducerSetup" type="Node" parent="."]
+script = ExtResource("2_3sola")
+
+[connection signal="pressed" from="SimpleProducerConsumerButton" to="SimpleProducerConsumerSetup" method="RunMarket"]
+[connection signal="pressed" from="DualProducer" to="DualProducerSetup" method="RunMarket"]
