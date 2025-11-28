@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cg6aaewlsase"]
+[gd_scene load_steps=4 format=3 uid="uid://cg6aaewlsase"]
 
 [ext_resource type="Script" uid="uid://bnpbmee0m2j7h" path="res://test/SimpleProducerConsumer.cs" id="1_y8lgp"]
 [ext_resource type="Script" uid="uid://ch63nlvhx3esl" path="res://test/DualProducer.cs" id="2_3sola"]
+[ext_resource type="Script" uid="uid://xf0gb0d7scux" path="res://test/CircularProducer.cs" id="3_k3pjf"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -25,5 +26,16 @@ text = "Dual Producer"
 [node name="DualProducerSetup" type="Node" parent="."]
 script = ExtResource("2_3sola")
 
+[node name="CircularProducer" type="Button" parent="."]
+offset_left = 17.0
+offset_top = 101.0
+offset_right = 270.0
+offset_bottom = 132.0
+text = "Circular Producer"
+
+[node name="CircularProducerSetup" type="Node" parent="."]
+script = ExtResource("3_k3pjf")
+
 [connection signal="pressed" from="SimpleProducerConsumerButton" to="SimpleProducerConsumerSetup" method="RunMarket"]
 [connection signal="pressed" from="DualProducer" to="DualProducerSetup" method="RunMarket"]
+[connection signal="pressed" from="CircularProducer" to="CircularProducerSetup" method="RunMarket"]
