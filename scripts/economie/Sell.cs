@@ -1,12 +1,52 @@
 using System;
 using System.Collections.Generic;
 
-public abstract partial class Sell(Goods goods) {
+public partial class Sell(Storage goodsPool, Storage cashPool) {
     
-    public Goods Goods { get; set; } = goods;
+
+    public Storage GoodsPool = goodsPool;
+    public Storage CashPool = cashPool;
+
     public double SoldAmount { get; set; } = 0f;
     public double SoldValue { get; set; } = 0f;
 	public double LastPrice { get; set; } = 0f;
 
-    public abstract double GetSellAmountAtPrice(double price);
+    // This is invoked by the market to estimate price
+	public double GetSellAmountAtPrice(double price)
+    {
+        double desired = GetMaxSellAmountByGoodsPool();
+        double available = desired * 2.0;
+        if (available <= 0f || price <= 0f) {
+            return 0.0f;
+        }
+        return Math.Max(available - LastPrice * desired / price, 0.0f);
+    }
+
+    public double GetMaxSellAmountByGoodsPool()
+    {
+        return GoodsPool.GetMaxOutputAmount();
+    }
+
+    public void ExecuteSell(double price)
+    {
+        if (price > 0.0) 
+        {
+            SoldAmount = GetSellAmountAtPrice(price);
+            LastPrice = price;
+            SoldValue = SoldAmount * price;
+        } 
+        else
+        {
+            SoldAmount = 0.0;
+            LastPrice = 0.0;
+            SoldValue = 0.0;
+        }
+        CashPool.Amount += SoldValue;
+        GoodsPool.Amount -= SoldAmount;
+    }
+    
+    public override string ToString()
+    {
+        return "Sold " + SoldAmount.ToString("F2") + " " + goodsPool.Goods.Name + "@" + LastPrice.ToString("F2") + " = " + SoldValue.ToString("F2") + "\n";
+    }
 }

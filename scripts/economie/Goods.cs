@@ -1,6 +1,6 @@
 using System;
 
-public partial class Goods(string Name)
+public partial class Goods(string name)
 {
-	public string Name { get; set; } = Name;
+	public string Name { get; set; } = name;
 }
