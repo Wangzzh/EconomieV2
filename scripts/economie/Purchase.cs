@@ -13,22 +13,12 @@ public partial class Purchase(Storage cashPool, Storage goodsPool) {
     // This is invoked by the market to estimate price
 	public double GetPurchaseAmountAtPrice(double price)
     {
-        double budget = GetMaxPurchaseValueByCashPool();
+        double budget = CashPool.GetDesiredOutputAmount();
         if (budget <= 0.0f || price <= 0.0f)
         {
             return 0.0f;
         }
-        return Math.Min(budget / price, GetMaxPurchaseAmountByGoodsPool());
-    }
-
-    public double GetMaxPurchaseValueByCashPool()
-    {
-        return CashPool.GetMaxOutputAmount();
-    }
-
-    public double GetMaxPurchaseAmountByGoodsPool()
-    {
-        return GoodsPool.GetMaxInputAmount();
+        return Math.Min(budget / price, GoodsPool.GetMaxInputAmount());
     }
 
     public void ExecutePurchase(double price)

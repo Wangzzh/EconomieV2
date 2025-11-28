@@ -51,7 +51,7 @@ public partial class Location {
                 double low = 0.0;
                 double current = 1.0;
                 double high = Double.MaxValue;
-                while (high - low >= 0.001) {
+                while (high - low >= 0.00001) {
                     GD.Print("Evaluating price: " + current + " for goods: " + goods.Name);
                     double purchaseAmount = GetPurchaseAmountAtPrice(current, purchaseList);
                     double sellAmount = GetSellAmountAtPrice(current, sellList);

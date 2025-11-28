@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 public partial class Sell(Storage goodsPool, Storage cashPool) {
     
@@ -14,17 +15,13 @@ public partial class Sell(Storage goodsPool, Storage cashPool) {
     // This is invoked by the market to estimate price
 	public double GetSellAmountAtPrice(double price)
     {
-        double desired = GetMaxSellAmountByGoodsPool();
-        double available = desired * 2.0;
+        double desired = GoodsPool.GetDesiredOutputAmount();
+        double available = GoodsPool.GetMaxOutputAmount();
         if (available <= 0f || price <= 0f) {
             return 0.0f;
         }
+        // Evaluate minimum intrinsic value = 0.1
         return Math.Max(available - Math.Max(LastPrice, 0.1) * (available - desired) / price, 0.0f);
-    }
-
-    public double GetMaxSellAmountByGoodsPool()
-    {
-        return GoodsPool.GetMaxOutputAmount();
     }
 
     public void ExecuteSell(double price)

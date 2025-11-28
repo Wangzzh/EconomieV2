@@ -10,10 +10,15 @@ public partial class Storage(Goods goods, double level = 1.0)
     public double Amount = 0.0f;
     public Goods Goods = goods;
 
+    // Requirements
+    // Soft lower bound > Output amount cap > Output amount desired
+    // 1 - Soft upper bound > Input amount cap > Input amount desired
     public double SoftUpperBound = 0.6f; // Max input is reduced if more than 60% full
     public double SoftLowerBound = 0.4f; // Max output is reduced if less than 40% full
-    public double InputAmountCap = 0.1f; // Max input is capped at 10% of capacity
-    public double OutputAmountCap = 0.1f; // Max output is capped at 20% of capacity
+    public double InputAmountDesired = 0.1f; // Desired input is capped at 10% of capacity
+    public double OutputAmountDesired = 0.1f; // Desired output is capped at 10% of capacity
+    public double InputAmountCap = 0.2f; // Max input is capped at 20% of capacity
+    public double OutputAmountCap = 0.2f; // Max output is capped at 20% of capacity
 
     public void ModifyCapacity(double newLevel)
     {
@@ -21,7 +26,6 @@ public partial class Storage(Goods goods, double level = 1.0)
         Level = newLevel;
     }
 
-    // Limit possible output from the storage
     public double GetMaxOutputAmount()
     {
         if (Amount / Capacity >= SoftLowerBound)
@@ -31,7 +35,16 @@ public partial class Storage(Goods goods, double level = 1.0)
         return OutputAmountCap * Amount / SoftLowerBound;
     }
 
-    // Limit desired input from storage, but it is possible to receive higher inputs that exceeds capacity
+    public double GetDesiredOutputAmount()
+    {
+        if (Amount / Capacity >= SoftLowerBound)
+        {
+            return OutputAmountDesired * Capacity;
+        }
+        return OutputAmountDesired * Amount / SoftLowerBound;
+        
+    }
+
     public double GetMaxInputAmount()
     {
         if (Amount / Capacity <= SoftUpperBound)
@@ -43,6 +56,19 @@ public partial class Storage(Goods goods, double level = 1.0)
             return 0.0f;
         }
         return InputAmountCap * (Capacity - Amount) / (1.0 - SoftUpperBound);
+    }
+
+    public double GetDesiredInputAmount()
+    {
+        if (Amount / Capacity <= SoftUpperBound)
+        {
+            return InputAmountDesired * Capacity;
+        }
+        else if (Amount >= Capacity)
+        {
+            return 0.0f;
+        }
+        return InputAmountDesired * (Capacity - Amount) / (1.0 - SoftUpperBound);
     }
 
     public override string ToString()
