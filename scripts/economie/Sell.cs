@@ -19,7 +19,7 @@ public partial class Sell(Storage goodsPool, Storage cashPool) {
         if (available <= 0f || price <= 0f) {
             return 0.0f;
         }
-        return Math.Max(available - LastPrice * desired / price, 0.0f);
+        return Math.Max(available - Math.Max(LastPrice, 0.1) * (available - desired) / price, 0.0f);
     }
 
     public double GetMaxSellAmountByGoodsPool()

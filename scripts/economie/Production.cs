@@ -18,6 +18,7 @@ public partial class Production
 	public double LastEfficiency = 0.0;
 	public double LastProfit = 0.0;
 
+
 	public Production(
 		Dictionary<Goods, double> inputs, 
 		Dictionary<Goods, double> outputs, 
@@ -82,15 +83,16 @@ public partial class Production
 	{
 		double maxReinvestmentToInput = 0.0f;
 		double maxReinvestmentFromOutput = 0.0f;
+
 		foreach (KeyValuePair<Goods, double> input in Inputs) {
-			double newLevel = input.Value * Math.Max(Purchases[input.Key].LastPrice, 0.1);
-			InputCashPools[input.Key].ModifyCapacity(newLevel);
+			// double newLevel = input.Value * Math.Max(Purchases[input.Key].LastPrice, 0.1);
+			// InputCashPools[input.Key].ModifyCapacity(newLevel);
 			maxReinvestmentToInput += InputCashPools[input.Key].GetMaxInputAmount();
 		}
 		foreach (KeyValuePair<Goods, double> output in Outputs)
 		{
-			double newLevel = output.Value * Math.Max(Sells[output.Key].LastPrice, 0.1);
-			OutputCashPools[output.Key].ModifyCapacity(newLevel);
+			// double newLevel = output.Value * Math.Max(Sells[output.Key].LastPrice, 0.1);
+			// OutputCashPools[output.Key].ModifyCapacity(newLevel);
 			maxReinvestmentFromOutput += OutputCashPools[output.Key].GetMaxOutputAmount();
 			OutputCashPools[output.Key].Amount -= OutputCashPools[output.Key].GetMaxOutputAmount();
 		}

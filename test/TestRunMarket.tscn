@@ -1,17 +1,146 @@
-[gd_scene load_steps=2 format=3 uid="uid://cg6aaewlsase"]
+[gd_scene load_steps=3 format=3 uid="uid://cg6aaewlsase"]
 
 [ext_resource type="Script" uid="uid://bnpbmee0m2j7h" path="res://test/SimpleProducerConsumer.cs" id="1_y8lgp"]
+[ext_resource type="Script" uid="uid://d13ssfm0tfplv" path="res://test/SliderValueDisplay.cs" id="2_3sola"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="SimpleProducerConsumerButton" type="Button" parent="."]
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 115.0
-offset_bottom = 43.0
+offset_left = 21.0
+offset_top = 185.0
+offset_right = 460.0
+offset_bottom = 216.0
 text = "Simple Consumer and Producer"
 
-[node name="SimpleProducerConsumerSetup" type="Node" parent="."]
+[node name="SimpleProducerConsumerSetup" type="Node" parent="." node_paths=PackedStringArray("PriceLabel", "ProfitLabel", "EfficiencyLabel")]
 script = ExtResource("1_y8lgp")
+PriceLabel = NodePath("../PriceDisplay")
+ProfitLabel = NodePath("../ProfitDisplay")
+EfficiencyLabel = NodePath("../EfficiencyDisplay")
+
+[node name="SliderWheatOut" type="HSlider" parent="."]
+offset_left = 170.0
+offset_top = 21.0
+offset_right = 446.0
+offset_bottom = 37.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="SliderWheatOutValue" type="Label" parent="."]
+offset_left = 134.0
+offset_top = 17.0
+offset_right = 167.0
+offset_bottom = 40.0
+text = "1"
+script = ExtResource("2_3sola")
+
+[node name="LabelWheatOut" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 16.0
+offset_right = 115.0
+offset_bottom = 39.0
+text = "Wheat Out"
+
+[node name="SliderWheatIn" type="HSlider" parent="."]
+offset_left = 170.0
+offset_top = 54.0
+offset_right = 446.0
+offset_bottom = 70.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="SliderWheatInValue" type="Label" parent="."]
+offset_left = 134.0
+offset_top = 49.0
+offset_right = 167.0
+offset_bottom = 72.0
+text = "1"
+script = ExtResource("2_3sola")
+
+[node name="LabelWheatIn" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 116.0
+offset_bottom = 71.0
+text = "Wheat In"
+
+[node name="SliderFoodOut" type="HSlider" parent="."]
+offset_left = 170.0
+offset_top = 85.0
+offset_right = 446.0
+offset_bottom = 101.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="SliderFoodOutValue" type="Label" parent="."]
+offset_left = 135.0
+offset_top = 81.0
+offset_right = 168.0
+offset_bottom = 104.0
+text = "1"
+script = ExtResource("2_3sola")
+
+[node name="LabelFoodOut" type="Label" parent="."]
+offset_left = 31.0
+offset_top = 80.0
+offset_right = 115.0
+offset_bottom = 103.0
+text = "Food Out"
+
+[node name="SliderFoodIn" type="HSlider" parent="."]
+offset_left = 170.0
+offset_top = 118.0
+offset_right = 446.0
+offset_bottom = 134.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="SliderFoodInValue" type="Label" parent="."]
+offset_left = 135.0
+offset_top = 111.0
+offset_right = 168.0
+offset_bottom = 134.0
+text = "1"
+script = ExtResource("2_3sola")
+
+[node name="LabelFoodIn" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 112.0
+offset_right = 116.0
+offset_bottom = 135.0
+text = "Food In"
+
+[node name="PriceDisplay" type="Label" parent="."]
+offset_left = 34.0
+offset_top = 245.0
+offset_right = 74.0
+offset_bottom = 268.0
+text = "Price: Wheat@0.00 Food@0.00"
+
+[node name="ProfitDisplay" type="Label" parent="."]
+offset_left = 34.0
+offset_top = 277.0
+offset_right = 412.0
+offset_bottom = 300.0
+text = "Profit: WheatProducer@0.00 FoodProducer@0.00"
+
+[node name="EfficiencyDisplay" type="Label" parent="."]
+offset_left = 35.0
+offset_top = 311.0
+offset_right = 267.0
+offset_bottom = 334.0
+text = "Eff: Wheat@0.00 Food@0.00"
 
 [connection signal="pressed" from="SimpleProducerConsumerButton" to="SimpleProducerConsumerSetup" method="RunMarket"]
+[connection signal="value_changed" from="SliderWheatOut" to="SimpleProducerConsumerSetup" method="UpdateWheatOut"]
+[connection signal="value_changed" from="SliderWheatOut" to="SliderWheatOutValue" method="Update"]
+[connection signal="value_changed" from="SliderWheatIn" to="SimpleProducerConsumerSetup" method="UpdateWheatIn"]
+[connection signal="value_changed" from="SliderWheatIn" to="SliderWheatInValue" method="Update"]
+[connection signal="value_changed" from="SliderFoodOut" to="SimpleProducerConsumerSetup" method="UpdateFoodOut"]
+[connection signal="value_changed" from="SliderFoodOut" to="SliderFoodOutValue" method="Update"]
+[connection signal="value_changed" from="SliderFoodIn" to="SimpleProducerConsumerSetup" method="UpdateFoodIn"]
+[connection signal="value_changed" from="SliderFoodIn" to="SliderFoodInValue" method="Update"]
