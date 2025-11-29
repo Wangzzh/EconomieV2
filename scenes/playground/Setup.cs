@@ -25,21 +25,21 @@ public partial class Setup : Node
 		wheatProvider = new(
 			"Wheat Provider", 
 			[], 
-			new(){{wheat, 10.0}}, 
+			new(){{wheat, 5.0}}, 
 			currency
 		);
 
 		toolsProvider = new(
 			"Tools Provider", 
 			[], 
-			new(){{tools, 4.0}}, 
+			new(){{tools, 2.0}}, 
 			currency
 		);
 
 		foodFactory = new(
 			"Food Factory", 
-			new(){{wheat, 4.0}, {tools, 1.0}}, 
-			new(){{food, 4.0}}, 
+			new(){{wheat, 8.0}, {tools, 1.0}}, 
+			new(){{food, 8.0}}, 
 			currency
 		);
 		foodFactory.InputCashPools[wheat].Amount = 5.0;
@@ -56,7 +56,7 @@ public partial class Setup : Node
 
 		foodConsumer = new(
 			"Food Consumer", 
-			new(){{food, 2.0}}, 
+			new(){{food, 1.0}}, 
 			[], 
 			currency
 		);
@@ -78,7 +78,7 @@ public partial class Setup : Node
 
 	public void RunMarket()
 	{
-		foodConsumer.InputCashPools[food].Amount = 5.0 * foodConsumer.Inputs[food];
+		foodConsumer.InputCashPools[food].Amount = 0.5 * foodConsumer.Inputs[food];
 		wineConsumer.InputCashPools[wine].Amount = 5.0 * wineConsumer.Inputs[wine];
 		wheatProvider.OutputCashPools[wheat].Amount = 1.0;
 		toolsProvider.OutputCashPools[tools].Amount = 1.0;

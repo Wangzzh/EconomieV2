@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://8fnvoruyyqdc"]
+[gd_scene load_steps=6 format=3 uid="uid://8fnvoruyyqdc"]
 
 [ext_resource type="Script" uid="uid://cniv37xlwj2rx" path="res://scenes/playground/UiUpdate.cs" id="1_4ni6b"]
-[ext_resource type="Script" uid="uid://rcrn4mmlf7io" path="res://scenes/playground/UiProductionContainer.cs" id="1_hytyk"]
 [ext_resource type="Script" uid="uid://bmiewy170ug1e" path="res://scenes/playground/Setup.cs" id="3_48xn8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bfav"]
@@ -30,7 +29,6 @@ offset_bottom = 227.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_6bfav")
-script = ExtResource("1_hytyk")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/ProductionPanel"]
 layout_mode = 2

@@ -32,11 +32,11 @@ public partial class Location {
 
     public void RunMarket() {
         foreach(Goods goods in GoodsList) {
-            GD.Print("Running market for goods: " + goods.Name);
+            // GD.Print("Running market for goods: " + goods.Name);
             List<Purchase> purchaseList = AllGoodsPurchases[goods];
             List<Sell> sellList = AllGoodsSells[goods];
             if (purchaseList.Count == 0 || sellList.Count == 0) {
-                GD.Print("Not enough sell or purchase for goods: " + goods.Name);
+                // GD.Print("Not enough sell or purchase for goods: " + goods.Name);
                 foreach (Purchase purchase in purchaseList)
                 {
                     purchase.ExecutePurchase(0.0);
@@ -82,7 +82,7 @@ public partial class Location {
                         break;
                     }
                 }
-                GD.Print("Reached equilibrium price: " + current + " for goods: " + goods.Name);
+                // GD.Print("Reached equilibrium price: " + current + " for goods: " + goods.Name);
                 foreach (Purchase purchase in purchaseList) 
                 {
                     purchase.ExecutePurchase(current);
