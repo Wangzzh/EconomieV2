@@ -101,15 +101,16 @@ public partial class Production
 		}
 		
 		double profit = 0.0;
+		double profitFactor = 0.2; // At least 20% of income goes to profit
 		double reinvestMultiplier = 1.0;
-		if (maxReinvestmentFromOutput >= maxReinvestmentToInput)
+		if (maxReinvestmentFromOutput >= (1.0 + profitFactor) * maxReinvestmentToInput)
 		{
 			profit = maxReinvestmentFromOutput - maxReinvestmentToInput;
 			reinvestMultiplier = 1.0;
 		} else
 		{
-			profit = 0.0;
-			reinvestMultiplier = maxReinvestmentFromOutput / maxReinvestmentToInput;
+			reinvestMultiplier = maxReinvestmentFromOutput / maxReinvestmentToInput / (1.0 + profitFactor);
+			profit = maxReinvestmentFromOutput * profitFactor / (1.0 + profitFactor);
 		}
 
 		LastProfit = profit;

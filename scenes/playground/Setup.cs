@@ -34,7 +34,7 @@ public partial class Setup : Node
 		toolsProvider = new(
 			"Tools Provider", 
 			new(){{labor, 1.0}}, 
-			new(){{tools, 1.0}}, 
+			new(){{tools, 5.0}}, 
 			currency
 		);
 
@@ -48,7 +48,7 @@ public partial class Setup : Node
 		foodFactory = new(
 			"Food Factory", 
 			new(){{wheat, 4.0}, {tools, 1.0}, {labor, 5.0}}, 
-			new(){{food, 8.0}}, 
+			new(){{food, 1.0}}, 
 			currency
 		);
 		foodFactory.InputCashPools[wheat].Amount = 5.0;
@@ -74,7 +74,7 @@ public partial class Setup : Node
 
 		wineConsumer = new(
 			"Wine Consumer", 
-			new(){{wine, 5.0}}, 
+			new(){{wine, 1.0}}, 
 			[], 
 			currency
 		);
