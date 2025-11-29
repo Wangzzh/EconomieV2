@@ -63,6 +63,8 @@ public partial class UiUpdate : Node
 				goodsBar.Value = production.InputPools[key].Amount / production.InputPools[key].Capacity;
 				Label goodsLabel = (Label) goodsContainer.FindChild("GoodsLabel", true, false);
 				goodsLabel.Text = production.InputPools[key].Amount.ToString("F2") + "/" + production.InputPools[key].Capacity.ToString("F2");
+				Label amount = (Label) goodsContainer.FindChild("Amount", true, false);
+				amount.Text = production.Purchases[key].PurchasedAmount.ToString("F2") + "@";
 				Label price = (Label) goodsContainer.FindChild("Price", true, false);
 				price.Text = "$" + production.Purchases[key].LastPrice.ToString("F2");
 			}
@@ -95,6 +97,8 @@ public partial class UiUpdate : Node
 				goodsBar.Value = production.OutputPools[key].Amount / production.OutputPools[key].Capacity;
 				Label goodsLabel = (Label) goodsContainer.FindChild("CashLabel", true, false);
 				goodsLabel.Text = production.OutputPools[key].Amount.ToString("F2") + "/" + production.OutputPools[key].Capacity.ToString("F2");
+				Label amount = (Label) goodsContainer.FindChild("Amount", true, false);
+				amount.Text = production.Sells[key].SoldAmount.ToString("F2") + "@";
 				Label price = (Label) goodsContainer.FindChild("Price", true, false);
 				price.Text = "$" + production.Sells[key].LastPrice.ToString("F2");
 			}

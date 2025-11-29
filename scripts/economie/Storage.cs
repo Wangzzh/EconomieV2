@@ -13,12 +13,15 @@ public partial class Storage(Goods goods, double level = 1.0)
     // Requirements
     // Soft lower bound > Output amount cap > Output amount desired
     // 1 - Soft upper bound > Input amount cap > Input amount desired
-    public double SoftUpperBound = 0.6f; // Max input is reduced if more than 60% full
-    public double SoftLowerBound = 0.4f; // Max output is reduced if less than 40% full
+    public double SoftUpperBound = 0.4f; // Max input is reduced if more than 50% full
+    public double SoftLowerBound = 0.6f; // Max output is reduced if less than 50% full
     public double InputAmountDesired = 0.2f; // Desired input is capped at 20% of capacity
     public double OutputAmountDesired = 0.2f; // Desired output is capped at 20% of capacity
-    public double InputAmountCap = 0.3f; // Max input is capped at 30% of capacity
-    public double OutputAmountCap = 0.3f; // Max output is capped at 30% of capacity
+    public double InputAmountCap = 0.4f; // Max input is capped at 30% of capacity
+    public double OutputAmountCap = 0.4f; // Max output is capped at 30% of capacity
+    
+    public double ServiceOutputAmountDesiredFactor = 0.8f; // Desired output is 80% of all services produced
+    public double ServiceOutputAmountCapFactor = 1.0f; // Max output is capped at 100% of all services produced
 
     public void ModifyCapacity(double newLevel)
     {
@@ -28,6 +31,10 @@ public partial class Storage(Goods goods, double level = 1.0)
 
     public double GetMaxOutputAmount()
     {
+        if (Goods.Service)
+        {
+            return Amount * ServiceOutputAmountCapFactor;
+        }
         if (Amount / Capacity >= SoftLowerBound)
         {
             return OutputAmountCap * Capacity;
@@ -37,6 +44,10 @@ public partial class Storage(Goods goods, double level = 1.0)
 
     public double GetDesiredOutputAmount()
     {
+        if (Goods.Service)
+        {
+            return Amount * ServiceOutputAmountDesiredFactor;
+        }
         if (Amount / Capacity >= SoftLowerBound)
         {
             return OutputAmountDesired * Capacity;
@@ -71,11 +82,13 @@ public partial class Storage(Goods goods, double level = 1.0)
         return InputAmountDesired * (Capacity - Amount) / (1.0 - SoftUpperBound);
     }
 
-    public void RunDecay()
+    public void RunDecay(bool isService = false)
     {
-        if (Goods.Decay > 0.0 && Amount > 0.0)
-        {
-            Amount *= (1.0 - Goods.Decay);
+        if (isService == Goods.Service) {
+            if (Goods.Decay > 0.0 && Amount > 0.0)
+            {
+                Amount *= (1.0 - Goods.Decay);
+            }
         }
     }
 

@@ -101,16 +101,16 @@ theme_override_constants/margin_bottom = 5
 [node name="GridContainer" type="GridContainer" parent="UI/GoodsPanel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 5
-columns = 5
+columns = 6
 
 [node name="Multi" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 10
 text = "2x"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Goods" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
@@ -118,9 +118,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 10
 text = "Goods"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
@@ -171,14 +170,23 @@ text = "1.00/2.00"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Amount" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 10
+text = "2.0@"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Price" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 10
 text = "$2.35"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AllProductionsPanel" type="Panel" parent="UI"]

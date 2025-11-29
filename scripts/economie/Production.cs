@@ -118,23 +118,27 @@ public partial class Production
 		}
 	}
 
-	public void RunDecay()
+	public void RunInputDecay(bool isService = false)
 	{
 		foreach (KeyValuePair<Goods, Storage> goodsStorage in InputPools)
 		{
-			goodsStorage.Value.RunDecay();
+			goodsStorage.Value.RunDecay(isService);
 		}
 		foreach (KeyValuePair<Goods, Storage> goodsStorage in InputCashPools)
 		{
-			goodsStorage.Value.RunDecay();
+			goodsStorage.Value.RunDecay(isService);
 		}
+	}
+
+	public void RunOutputDecay(bool isService = false)
+	{
 		foreach (KeyValuePair<Goods, Storage> goodsStorage in OutputPools)
 		{
-			goodsStorage.Value.RunDecay();
+			goodsStorage.Value.RunDecay(isService);
 		}
 		foreach (KeyValuePair<Goods, Storage> goodsStorage in OutputCashPools)
 		{
-			goodsStorage.Value.RunDecay();
+			goodsStorage.Value.RunDecay(isService);
 		}
 	}
 

@@ -114,13 +114,23 @@ public partial class Location {
         return sellAmount;
     }
 
+    public void CleanUpService()
+    {
+        foreach (Production production in Productions)
+        {
+            production.RunOutputDecay(true);
+        }   
+    }
+
     public void RunProduction()
     {
         foreach (Production production in Productions)
         {
             production.RunProduction();
             production.DistributeCash();
-            production.RunDecay();
+            production.RunInputDecay(true);
+            production.RunInputDecay(false);
+            production.RunOutputDecay(false);
         }   
     }
 }
