@@ -1,0 +1,217 @@
+[gd_scene load_steps=7 format=3 uid="uid://8fnvoruyyqdc"]
+
+[ext_resource type="Script" uid="uid://cniv37xlwj2rx" path="res://scenes/playground/UiUpdate.cs" id="1_4ni6b"]
+[ext_resource type="Script" uid="uid://rcrn4mmlf7io" path="res://scenes/playground/UiProductionContainer.cs" id="1_hytyk"]
+[ext_resource type="Script" uid="uid://bmiewy170ug1e" path="res://scenes/playground/Setup.cs" id="3_48xn8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bfav"]
+bg_color = Color(0.66021466, 0.59920317, 0.5537658, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hytyk"]
+bg_color = Color(0.5656582, 0.49672085, 0.42274842, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hytyk"]
+
+[node name="Playground" type="Node2D"]
+
+[node name="UI" type="Node" parent="." node_paths=PackedStringArray("SetupNode", "Container", "ProductionContainer", "GoodsContainer")]
+script = ExtResource("1_4ni6b")
+SetupNode = NodePath("../Setup")
+Container = NodePath("AllProductionsPanel/MarginContainer/GridContainer")
+ProductionContainer = NodePath("ProductionPanel")
+GoodsContainer = NodePath("GoodsPanel")
+
+[node name="ProductionPanel" type="PanelContainer" parent="UI"]
+custom_minimum_size = Vector2(600, 200)
+offset_left = -639.0
+offset_top = 27.0
+offset_right = -39.0
+offset_bottom = 227.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_6bfav")
+script = ExtResource("1_hytyk")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/ProductionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ProductionPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ProductionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProductionName" type="Label" parent="UI/ProductionPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.3046071, 0.17697614, 0.08912266, 1)
+text = "Production Name"
+
+[node name="Efficiency" type="Label" parent="UI/ProductionPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.3046071, 0.17697614, 0.08912266, 1)
+text = "100%"
+
+[node name="Profit" type="Label" parent="UI/ProductionPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.3046071, 0.17697614, 0.08912266, 1)
+text = "0.00U"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/ProductionPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="InputGoods" type="VBoxContainer" parent="UI/ProductionPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="OutputGoods" type="VBoxContainer" parent="UI/ProductionPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="GoodsPanel" type="PanelContainer" parent="UI"]
+custom_minimum_size = Vector2(285, 45)
+offset_left = -628.0
+offset_top = 242.0
+offset_right = -343.0
+offset_bottom = 287.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hytyk")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/GoodsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="UI/GoodsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+columns = 5
+
+[node name="Multi" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 12
+text = "2x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Goods" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 12
+text = "Goods"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CashBar" type="ProgressBar" parent="UI/GoodsPanel/MarginContainer/GridContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 12
+max_value = 1.0
+value = 0.5
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="CashLabel" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "$1.00/2.00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GoodsBar" type="ProgressBar" parent="UI/GoodsPanel/MarginContainer/GridContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 12
+max_value = 1.0
+value = 0.8
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="GoodsLabel" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "1.00/2.00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Price" type="Label" parent="UI/GoodsPanel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.14863986, 0.0760958, 0.027352327, 1)
+theme_override_font_sizes/font_size = 12
+text = "$2.35"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AllProductionsPanel" type="Panel" parent="UI"]
+offset_right = 1230.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hytyk")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/AllProductionsPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="UI/AllProductionsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="Button" type="Button" parent="UI"]
+custom_minimum_size = Vector2(300, 40)
+offset_left = 1576.0
+offset_top = 41.0
+offset_right = 1876.0
+offset_bottom = 81.0
+text = "Run Market"
+
+[node name="Setup" type="Node" parent="."]
+script = ExtResource("3_48xn8")
+
+[connection signal="pressed" from="UI/Button" to="Setup" method="RunMarket"]

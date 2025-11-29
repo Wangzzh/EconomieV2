@@ -52,10 +52,10 @@ public partial class Location {
                 double current = 1.0;
                 double high = Double.MaxValue;
                 while (high - low >= 0.00001) {
-                    GD.Print("Evaluating price: " + current + " for goods: " + goods.Name);
+                    // GD.Print("Evaluating price: " + current + " for goods: " + goods.Name);
                     double purchaseAmount = GetPurchaseAmountAtPrice(current, purchaseList);
                     double sellAmount = GetSellAmountAtPrice(current, sellList);
-                    GD.Print("Purchase: " + purchaseAmount + " and sell: " + sellAmount + " for goods: " + goods.Name);
+                    // GD.Print("Purchase: " + purchaseAmount + " and sell: " + sellAmount + " for goods: " + goods.Name);
                     if (purchaseAmount <= 0.01 && sellAmount <= 0.01)
                     {
                         current = 0.0;
@@ -120,6 +120,7 @@ public partial class Location {
         {
             production.RunProduction();
             production.DistributeCash();
+            production.RunDecay();
         }   
     }
 }

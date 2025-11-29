@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public partial class SimpleProducerConsumer : Node
 {
 	
-	public Goods food = new("food");
-	public Goods wheat = new("wheat");
+	public Goods food = new("food", 0.01);
+	public Goods wheat = new("wheat", 0.1);
 	public Goods currency = new("Currency");
 
 	public Location location;
@@ -30,15 +30,15 @@ public partial class SimpleProducerConsumer : Node
 		GD.Print("Initializing location");
 
 		Dictionary<Goods, double> wheatProviderOutputs = new(){{wheat, 1.0}};
-		wheatProvider = new([], wheatProviderOutputs, currency);
+		wheatProvider = new("Wheat Provider", [], wheatProviderOutputs, currency);
 		
 		Dictionary<Goods, double> foodProductionInputs = new(){{wheat, 1.0}};
 		Dictionary<Goods, double> foodProductionOutputs = new(){{food, 1.0}};
-		foodProduction = new(foodProductionInputs, foodProductionOutputs, currency);
+		foodProduction = new("Food Producer", foodProductionInputs, foodProductionOutputs, currency);
 		foodProduction.InputCashPools[wheat].Amount = 5.0;
 		
 		Dictionary<Goods, double> foodConsumerInputs = new(){{food, 1.0}};
-		foodConsumer = new(foodConsumerInputs, [], currency);
+		foodConsumer = new("Food Consumer", foodConsumerInputs, [], currency);
 
 		location = new()
 		{

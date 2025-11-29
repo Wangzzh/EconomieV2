@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public partial class Storage(Goods goods, double level = 1.0)
 {
     public double Level = level; // The unit amount of each input or output
-    public double Capacity = 10.0f * level;
+    public double Capacity = 5.0f * level;
 
     public double Amount = 0.0f;
     public Goods Goods = goods;
@@ -15,10 +15,10 @@ public partial class Storage(Goods goods, double level = 1.0)
     // 1 - Soft upper bound > Input amount cap > Input amount desired
     public double SoftUpperBound = 0.6f; // Max input is reduced if more than 60% full
     public double SoftLowerBound = 0.4f; // Max output is reduced if less than 40% full
-    public double InputAmountDesired = 0.1f; // Desired input is capped at 10% of capacity
-    public double OutputAmountDesired = 0.1f; // Desired output is capped at 10% of capacity
-    public double InputAmountCap = 0.2f; // Max input is capped at 20% of capacity
-    public double OutputAmountCap = 0.2f; // Max output is capped at 20% of capacity
+    public double InputAmountDesired = 0.2f; // Desired input is capped at 20% of capacity
+    public double OutputAmountDesired = 0.2f; // Desired output is capped at 20% of capacity
+    public double InputAmountCap = 0.3f; // Max input is capped at 30% of capacity
+    public double OutputAmountCap = 0.3f; // Max output is capped at 30% of capacity
 
     public void ModifyCapacity(double newLevel)
     {
@@ -69,6 +69,14 @@ public partial class Storage(Goods goods, double level = 1.0)
             return 0.0f;
         }
         return InputAmountDesired * (Capacity - Amount) / (1.0 - SoftUpperBound);
+    }
+
+    public void RunDecay()
+    {
+        if (Goods.Decay > 0.0 && Amount > 0.0)
+        {
+            Amount *= (1.0 - Goods.Decay);
+        }
     }
 
     public override string ToString()

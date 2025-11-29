@@ -40,7 +40,7 @@ public partial class Purchase(Storage cashPool, Storage goodsPool) {
 
     public override string ToString()
     {
-        return "Purchased " + PurchasedAmount.ToString("F2") + " " + goodsPool.Goods.Name + "@" + LastPrice.ToString("F2") + " = " + PurchasedValue.ToString("F2") + "\n";
+        return "Purchased " + PurchasedAmount.ToString("F2") + " " + GoodsPool.Goods.Name + "@" + LastPrice.ToString("F2") + " = " + PurchasedValue.ToString("F2") + "\n";
     }
 
 }

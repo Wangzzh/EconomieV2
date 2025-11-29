@@ -4,6 +4,7 @@ using Godot;
 
 public partial class Production
 {
+	public string Name;
 	public Dictionary<Goods, double> Inputs = [];
 	public Dictionary<Goods, double> Outputs = [];
 
@@ -20,10 +21,12 @@ public partial class Production
 
 
 	public Production(
+		string name,
 		Dictionary<Goods, double> inputs, 
 		Dictionary<Goods, double> outputs, 
 		Goods currency)
 	{
+		Name = name;
 		Inputs = inputs;
 		Outputs = outputs;
 
@@ -112,6 +115,26 @@ public partial class Production
 		LastProfit = profit;
 		foreach (KeyValuePair<Goods, double> input in Inputs) {
 			InputCashPools[input.Key].Amount += InputCashPools[input.Key].GetMaxInputAmount() * reinvestMultiplier;
+		}
+	}
+
+	public void RunDecay()
+	{
+		foreach (KeyValuePair<Goods, Storage> goodsStorage in InputPools)
+		{
+			goodsStorage.Value.RunDecay();
+		}
+		foreach (KeyValuePair<Goods, Storage> goodsStorage in InputCashPools)
+		{
+			goodsStorage.Value.RunDecay();
+		}
+		foreach (KeyValuePair<Goods, Storage> goodsStorage in OutputPools)
+		{
+			goodsStorage.Value.RunDecay();
+		}
+		foreach (KeyValuePair<Goods, Storage> goodsStorage in OutputCashPools)
+		{
+			goodsStorage.Value.RunDecay();
 		}
 	}
 

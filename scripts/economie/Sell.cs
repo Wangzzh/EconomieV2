@@ -44,6 +44,6 @@ public partial class Sell(Storage goodsPool, Storage cashPool) {
     
     public override string ToString()
     {
-        return "Sold " + SoldAmount.ToString("F2") + " " + goodsPool.Goods.Name + "@" + LastPrice.ToString("F2") + " = " + SoldValue.ToString("F2") + "\n";
+        return "Sold " + SoldAmount.ToString("F2") + " " + GoodsPool.Goods.Name + "@" + LastPrice.ToString("F2") + " = " + SoldValue.ToString("F2") + "\n";
     }
 }
