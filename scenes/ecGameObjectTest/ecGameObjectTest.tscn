@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx5tq8gc5q6ga"]
+
+[ext_resource type="Script" uid="uid://dberw6gqnajnh" path="res://scripts/EcGameObject/EcGameObject.cs" id="2_abdnt"]
+[ext_resource type="Script" uid="uid://ghnglacd17wu" path="res://scenes/ecGameObjectTest/Tester.cs" id="2_b4ov5"]
+
+[node name="EcGameObjectTest" type="Node3D"]
+
+[node name="Tester" type="Node" parent="."]
+script = ExtResource("2_b4ov5")
+
+[node name="EcGameObject" type="Node" parent="."]
+script = ExtResource("2_abdnt")
