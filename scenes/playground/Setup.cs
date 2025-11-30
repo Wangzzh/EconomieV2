@@ -30,6 +30,7 @@ public partial class Setup : Node
 			new(){{wheat, 8.0}}, 
 			currency
 		);
+		wheatProvider.InputCashPools[labor].Amount = 5.0;
 
 		toolsProvider = new(
 			"Tools Provider", 
@@ -37,6 +38,7 @@ public partial class Setup : Node
 			new(){{tools, 5.0}}, 
 			currency
 		);
+		toolsProvider.InputCashPools[labor].Amount = 5.0;
 
 		laborProvider = new(
 			"Labor Provider", 
@@ -71,6 +73,7 @@ public partial class Setup : Node
 			[], 
 			currency
 		);
+		foodConsumer.InputCashPools[food].Amount = 5.0;
 
 		wineConsumer = new(
 			"Wine Consumer", 
@@ -78,6 +81,7 @@ public partial class Setup : Node
 			[], 
 			currency
 		);
+		wineConsumer.InputCashPools[wine].Amount = 5.0;
 
 		location = new()
 		{
@@ -89,10 +93,12 @@ public partial class Setup : Node
 
 	public void RunMarket()
 	{
-		foodConsumer.InputCashPools[food].Amount = 0.5 * foodConsumer.Inputs[food];
-		wineConsumer.InputCashPools[wine].Amount = 5.0 * wineConsumer.Inputs[wine];
-		wheatProvider.OutputCashPools[wheat].Amount = 1.0;
-		toolsProvider.OutputCashPools[tools].Amount = 1.0;
+		double totalIncome = wheatProvider.LastProfit + toolsProvider.LastProfit + laborProvider.LastProfit +
+			foodFactory.LastProfit + wineFactory.LastProfit;
+		double foodWeight = foodConsumer.InputCashPools[food].GetDesiredInputAmount() + 0.01;
+		double wineWeight = wineConsumer.InputCashPools[wine].GetDesiredInputAmount() + 0.01;
+		foodConsumer.InputCashPools[food].Amount += totalIncome * foodWeight / (foodWeight + wineWeight);
+		wineConsumer.InputCashPools[wine].Amount += totalIncome * wineWeight / (foodWeight + wineWeight);
 
 		location.CollectPurchasesAndSells();
 		location.RunMarket();
