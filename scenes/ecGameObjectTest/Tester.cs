@@ -17,6 +17,9 @@ public partial class Tester : Node
 			ItemName = "Food"
 		};
 		food.StoreAsGameObject();
+
+        wheat.RemoveAsGameObject();
+        wheat.StoreAsGameObject();
 	}
 
 }

@@ -11,6 +11,9 @@ public partial class EcGameObject : Node
 	static Dictionary<string, int> NextId = [];
 	static EcGameObject GameObjectRoot;
 
+	[Export]
+	public int Id;
+
 	public override void _EnterTree()
 	{
 		if (this.GetType().Name == "EcGameObject") {
@@ -25,11 +28,19 @@ public partial class EcGameObject : Node
 		int currentId = NextId[type];
 		NextId[type] += 1;
 		Name = currentId.ToString();
+		Id = currentId;
 
 		Node folderNode = GetOrCreateChildNode(GameObjectRoot, type);
 		folderNode.AddChild(this);
 		return currentId;
 	}
+
+	public void RemoveAsGameObject()
+    {
+		string type = this.GetType().Name;
+		Node folderNode = GetOrCreateChildNode(GameObjectRoot, type);
+		folderNode.RemoveChild(this);
+    }
 
 	public Node GetGameObject(string type, int id)
 	{
