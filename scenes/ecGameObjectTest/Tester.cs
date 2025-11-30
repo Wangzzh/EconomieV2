@@ -18,8 +18,13 @@ public partial class Tester : Node
 		};
 		food.StoreAsGameObject();
 
-        wheat.RemoveAsGameObject();
-        wheat.StoreAsGameObject();
+		EcProductionMethod bakery = new()
+		{
+			ProductionMethodName = "Bakery",
+			InputItemAmounts = {{wheat.Id, 2.0}},
+			OutputItemAmounts = {{food.Id, 1.0}}
+		};
+		bakery.StoreAsGameObject();
 	}
 
 }

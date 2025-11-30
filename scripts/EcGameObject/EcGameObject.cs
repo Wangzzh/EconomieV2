@@ -36,15 +36,16 @@ public partial class EcGameObject : Node
 	}
 
 	public void RemoveAsGameObject()
-    {
+	{
 		string type = this.GetType().Name;
 		Node folderNode = GetOrCreateChildNode(GameObjectRoot, type);
 		folderNode.RemoveChild(this);
-    }
+	}
 
-	public Node GetGameObject(string type, int id)
+	public static T GetGameObject<T>(int id) where T: EcGameObject
 	{
-		return this.GetNode<Node>(type).GetNode(id.ToString());
+		string type = typeof(T).Name;
+		return GameObjectRoot.GetNode<Node>(type).GetNode<T>(id.ToString());
 	}
 
 	public static Node GetOrCreateChildNode(Node parent, string nodeName)
