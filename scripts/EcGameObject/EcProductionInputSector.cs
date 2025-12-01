@@ -7,20 +7,23 @@ public partial class EcProductionInputSector : EcGameObject
     public string SectorName = "Unnamed sector";
 
     [Export]
-    public int CashPoolId;
+    public int CashPoolId = -1;
     
     [Export]
-    public int ItemPoolId;
+    public int ItemPoolId = -1;
 
     [Export]
-    public int PurchaseOrderId;
+    public int PurchaseOrderId = -1;
+
+    [Export]
+    public double UnitAmount = 1.0;
 
     [Export]
     public string InputMethod = INPUT_METHOD.DO_NOTHING;
 
     public static class INPUT_METHOD
     {
-        public static string PURCHASE_UNIT_AMOUNT = "PURCHASE_UNIT_AMOUNT";
+        public static string PURCHASE_UNIT_AMOUNT_CAP_2X = "PURCHASE_UNIT_AMOUNT_CAP_2X";
         public static string DO_NOTHING = "DO_NOTHING";
     }
 
@@ -55,9 +58,30 @@ public partial class EcProductionInputSector : EcGameObject
         return sector;
     }
 
+    public void UpdateUnitAmount(double newUnitAmount)
+    {
+        UnitAmount = Math.Max(newUnitAmount, 0.1);
+        EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
+        itemPool.UpdateUnitAmount(UnitAmount);
+        EcPurchaseOrder purchaseOrder = GetGameObject<EcPurchaseOrder>(PurchaseOrderId);
+        EcStorage cashPool = GetGameObject<EcStorage>(CashPoolId);
+        cashPool.UpdateUnitAmount(UnitAmount * Math.Max(0.1, purchaseOrder.LastPrice));
+        RefreshPurchaseOrder();
+    }
+
+    public void RefreshPurchaseOrder()
+    {
+        if (InputMethod == INPUT_METHOD.PURCHASE_UNIT_AMOUNT_CAP_2X)
+        {
+            EcPurchaseOrder purchaseOrder = GetGameObject<EcPurchaseOrder>(PurchaseOrderId);
+            EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
+            purchaseOrder.MaxAmount = itemPool.DesiredUnitAmount * 2.0;
+            purchaseOrder.DesiredAmount = itemPool.DesiredUnitAmount;
+        }
+    }
+
     public void PreMarket()
     {
-        
     }
 
     public void PostMarket()

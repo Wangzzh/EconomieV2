@@ -7,20 +7,23 @@ public partial class EcProductionOutputSector : EcGameObject
     public string SectorName = "Unnamed sector";
 
     [Export]
-    public int CashPoolId;
+    public int CashPoolId = -1;
     
     [Export]
-    public int ItemPoolId;
+    public int ItemPoolId = -1;
 
     [Export]
-    public int SellOrderId;
+    public int SellOrderId = -1;
+
+    [Export]
+    public double UnitAmount = 1.0;
 
     [Export]
     public string OutputMethod = OUTPUT_METHOD.DO_NOTHING;
 
     public static class OUTPUT_METHOD
     {
-        public static string SELL_UNIT_AMOUNT = "PURCHASE_UNIT_AMOUNT";
+        public static string SELL_UNIT_AMOUNT_CAP_2X = "SELL_UNIT_AMOUNT_CAP_2X";
         public static string DO_NOTHING = "DO_NOTHING";
     }
 
@@ -53,6 +56,28 @@ public partial class EcProductionOutputSector : EcGameObject
         };
         sector.SellOrderId = order.StoreAsGameObject();
         return sector;
+    }
+
+    public void UpdateUnitAmount(double newUnitAmount)
+    {
+        UnitAmount = Math.Max(newUnitAmount, 0.1);
+        EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
+        itemPool.UpdateUnitAmount(UnitAmount);
+        EcSellOrder sellOrder = GetGameObject<EcSellOrder>(SellOrderId);
+        EcStorage cashPool = GetGameObject<EcStorage>(CashPoolId);
+        cashPool.UpdateUnitAmount(UnitAmount * Math.Max(0.1, sellOrder.LastPrice));
+        RefreshSellOrder();
+    }
+
+    public void RefreshSellOrder()
+    {
+        if (OutputMethod == OUTPUT_METHOD.SELL_UNIT_AMOUNT_CAP_2X)
+        {
+            EcSellOrder sellOrder = GetGameObject<EcSellOrder>(SellOrderId);
+            EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
+            sellOrder.MaxAmount = itemPool.DesiredUnitAmount * 2.0;
+            sellOrder.DesiredAmount = itemPool.DesiredUnitAmount;
+        }
     }
 
     public void PreMarket()

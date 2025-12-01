@@ -30,6 +30,10 @@ public partial class EcProduction : EcGameObject
         production.StoreAsGameObject();
         foreach (int productionMethodId in schema.ProductionMethodIds)
         {
+            // TODO:
+            // By default, the production should be at 0% efficiency?
+            double maxEfficiency = 1.0;
+
             Godot.Collections.Array<int> inputSectorIds = [];
             EcProductionMethod productionMethod = GetGameObject<EcProductionMethod>(productionMethodId);
             foreach (KeyValuePair<int, double> itemAmountPair in productionMethod.InputItemAmounts)
@@ -37,6 +41,8 @@ public partial class EcProduction : EcGameObject
                 EcItem item = GetGameObject<EcItem>(itemAmountPair.Key);
                 string sectorName = production.ProductionName + " / " + productionMethod.ProductionMethodName + " / " + item.ItemName + " Input";
                 EcProductionInputSector inputSector = EcProductionInputSector.CreateInputSectorForProduction(item, currency, sectorName);
+                inputSector.InputMethod = EcProductionInputSector.INPUT_METHOD.PURCHASE_UNIT_AMOUNT_CAP_2X;
+                inputSector.UpdateUnitAmount(maxEfficiency * itemAmountPair.Value);
                 inputSectorIds.Add(inputSector.Id);
             }
             production.InputSectorIds.Add(inputSectorIds);
@@ -47,11 +53,13 @@ public partial class EcProduction : EcGameObject
                 EcItem item = GetGameObject<EcItem>(itemAmountPair.Key);
                 string sectorName = production.ProductionName + " / " + productionMethod.ProductionMethodName + " / " + item.ItemName + " Output";
                 EcProductionOutputSector outputSector = EcProductionOutputSector.CreateOutputSectorForProduction(item, currency, sectorName);
+                outputSector.OutputMethod = EcProductionOutputSector.OUTPUT_METHOD.SELL_UNIT_AMOUNT_CAP_2X;
+                outputSector.UpdateUnitAmount(maxEfficiency * itemAmountPair.Value);
                 outputSectorIds.Add(outputSector.Id);
             }
             production.OutputSectorIds.Add(outputSectorIds);
 
-            production.MaxEfficiency.Add(0.0);
+            production.MaxEfficiency.Add(maxEfficiency);
         }
         return production;
     }

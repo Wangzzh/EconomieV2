@@ -18,7 +18,7 @@ public partial class EcStorage : EcGameObject
     [Export]
     public double DesiredUnitAmount = 1.0;
 
-    public void ScaleByUnitAmount(double newDesiredUnitAmount)
+    public void UpdateUnitAmount(double newDesiredUnitAmount)
     {
         Capacity *= (newDesiredUnitAmount / DesiredUnitAmount);
         DesiredUnitAmount = newDesiredUnitAmount;
