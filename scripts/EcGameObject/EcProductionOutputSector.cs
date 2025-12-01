@@ -71,18 +71,23 @@ public partial class EcProductionOutputSector : EcGameObject
 
     public void RefreshSellOrder()
     {
+        EcSellOrder sellOrder = GetGameObject<EcSellOrder>(SellOrderId);
         if (OutputMethod == OUTPUT_METHOD.SELL_UNIT_AMOUNT_CAP_2X)
         {
-            EcSellOrder sellOrder = GetGameObject<EcSellOrder>(SellOrderId);
             EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
-            sellOrder.MaxAmount = itemPool.DesiredUnitAmount * 2.0;
-            sellOrder.DesiredAmount = itemPool.DesiredUnitAmount;
+            sellOrder.MaxAmount = Math.Min(itemPool.GetMaxOutputAmount() * 0.5, itemPool.DesiredUnitAmount * 2.0);
+            sellOrder.DesiredAmount = Math.Min(itemPool.GetMaxOutputAmount() * 0.25, itemPool.DesiredUnitAmount);
+            sellOrder.Active = true;
+        }
+        else
+        {
+            sellOrder.Active = false;
         }
     }
 
     public void PreMarket()
     {
-        
+        RefreshSellOrder();
     }
 
     public void PostMarket()

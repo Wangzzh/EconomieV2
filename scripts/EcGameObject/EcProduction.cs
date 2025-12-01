@@ -41,7 +41,7 @@ public partial class EcProduction : EcGameObject
                 EcItem item = GetGameObject<EcItem>(itemAmountPair.Key);
                 string sectorName = production.ProductionName + " / " + productionMethod.ProductionMethodName + " / " + item.ItemName + " Input";
                 EcProductionInputSector inputSector = EcProductionInputSector.CreateInputSectorForProduction(item, currency, sectorName);
-                inputSector.InputMethod = EcProductionInputSector.INPUT_METHOD.PURCHASE_UNIT_AMOUNT_CAP_2X;
+                inputSector.InputMethod = EcProductionInputSector.INPUT_METHOD.PURCHASE_UNIT_CASH_AMOUNT;
                 inputSector.UpdateUnitAmount(maxEfficiency * itemAmountPair.Value);
                 inputSectorIds.Add(inputSector.Id);
             }

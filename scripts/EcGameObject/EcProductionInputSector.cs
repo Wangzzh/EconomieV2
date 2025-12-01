@@ -23,7 +23,7 @@ public partial class EcProductionInputSector : EcGameObject
 
     public static class INPUT_METHOD
     {
-        public static string PURCHASE_UNIT_AMOUNT_CAP_2X = "PURCHASE_UNIT_AMOUNT_CAP_2X";
+        public static string PURCHASE_UNIT_CASH_AMOUNT = "PURCHASE_UNIT_CASH_AMOUNT";
         public static string DO_NOTHING = "DO_NOTHING";
     }
 
@@ -71,17 +71,24 @@ public partial class EcProductionInputSector : EcGameObject
 
     public void RefreshPurchaseOrder()
     {
-        if (InputMethod == INPUT_METHOD.PURCHASE_UNIT_AMOUNT_CAP_2X)
+        EcPurchaseOrder purchaseOrder = GetGameObject<EcPurchaseOrder>(PurchaseOrderId);
+        if (InputMethod == INPUT_METHOD.PURCHASE_UNIT_CASH_AMOUNT)
         {
-            EcPurchaseOrder purchaseOrder = GetGameObject<EcPurchaseOrder>(PurchaseOrderId);
             EcStorage itemPool = GetGameObject<EcStorage>(ItemPoolId);
-            purchaseOrder.MaxAmount = itemPool.DesiredUnitAmount * 2.0;
-            purchaseOrder.DesiredAmount = itemPool.DesiredUnitAmount;
+            EcStorage cashPool = GetGameObject<EcStorage>(CashPoolId);
+            purchaseOrder.MaxAmount = Math.Min(itemPool.GetMaxInputAmount() * 0.5, itemPool.DesiredUnitAmount * 2.0);
+            purchaseOrder.Budget = Math.Min(cashPool.GetMaxOutputAmount() * 0.5, cashPool.DesiredUnitAmount * 1.0);
+            purchaseOrder.Active = true;
+        }
+        else
+        {
+            purchaseOrder.Active = false;
         }
     }
 
     public void PreMarket()
     {
+        RefreshPurchaseOrder();
     }
 
     public void PostMarket()

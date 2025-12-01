@@ -10,7 +10,7 @@ public partial class EcStorage : EcGameObject
     public int ItemId;
 
     [Export]
-    public double Capacity = 5.0;
+    public double Capacity = MAX_CAPACITY_FACTOR;
 
     [Export]
     public double Amount = 0.0;
@@ -18,15 +18,17 @@ public partial class EcStorage : EcGameObject
     [Export]
     public double DesiredUnitAmount = 1.0;
 
+    static readonly double MAX_CAPACITY_FACTOR = 5.0;
+
     public void UpdateUnitAmount(double newDesiredUnitAmount)
     {
-        Capacity *= (newDesiredUnitAmount / DesiredUnitAmount);
+        Capacity = newDesiredUnitAmount * MAX_CAPACITY_FACTOR;
         DesiredUnitAmount = newDesiredUnitAmount;
     }
 
     public double GetMaxInputAmount()
     {
-        return Math.Max(Capacity - Amount, 0.00);
+        return Math.Max(Capacity - Amount, 0.0);
     }
 
     public double GetMaxOutputAmount()

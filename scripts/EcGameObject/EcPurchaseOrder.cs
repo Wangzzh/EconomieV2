@@ -26,7 +26,7 @@ public partial class EcPurchaseOrder : EcGameObject
 
     // This should be managed by output sector
     [Export]
-    public double DesiredAmount = 0.0;
+    public double Budget = 0.0;
 
     // This should be managed by output sector
     [Export]
@@ -39,12 +39,11 @@ public partial class EcPurchaseOrder : EcGameObject
     // This is invoked by the market to estimate price
 	public double GetPurchaseAmountAtPrice(double price)
     {
-        double budget = DesiredAmount * LastPrice;
-        if (!Active || budget <= 0.0f || price <= 0.0f)
+        if (!Active || Budget <= 0.0f || price <= 0.0f)
         {
             return 0.0f;
         }
-        return Math.Min(budget / price, MaxAmount);
+        return Math.Min(Budget / price, MaxAmount);
     }
 
     public void ExecutePurchase(double price, double amount)
