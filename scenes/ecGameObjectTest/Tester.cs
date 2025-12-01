@@ -18,13 +18,36 @@ public partial class Tester : Node
 		};
 		food.StoreAsGameObject();
 
-		EcProductionMethod bakery = new()
+		EcItem gold = new()
 		{
-			ProductionMethodName = "Bakery",
+			ItemName = "Gold"
+		};
+		gold.StoreAsGameObject();
+
+		EcProductionMethod baking = new()
+		{
+			ProductionMethodName = "Baking",
 			InputItemAmounts = {{wheat.Id, 2.0}},
 			OutputItemAmounts = {{food.Id, 1.0}}
 		};
-		bakery.StoreAsGameObject();
+		baking.StoreAsGameObject();
+		
+		EcProductionMethod steaming = new()
+		{
+			ProductionMethodName = "Steaming",
+			InputItemAmounts = {{wheat.Id, 5.0}},
+			OutputItemAmounts = {{food.Id, 2.0}}
+		};
+		steaming.StoreAsGameObject();
+
+		EcProductionSchema foodFactorySchema = new()
+		{
+			SchemaName = "Food Factory",
+			ProductionMethodIds = [baking.Id, steaming.Id]
+		};
+		foodFactorySchema.StoreAsGameObject();
+
+		EcProduction foodProduction = EcProduction.CreateProductionFromSchema(foodFactorySchema, gold);
 	}
 
 }

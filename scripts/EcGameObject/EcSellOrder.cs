@@ -9,6 +9,9 @@ public partial class EcSellOrder : EcGameObject
     [Export]
     public int ownerOutputSectorId;
 
+    [Export]
+    public string purchaseOrderName = "Unnamed purchase";
+    
     // This should be managed by market
     [Export]
     public double LastAmount { get; set; } = 0f;
@@ -48,10 +51,5 @@ public partial class EcSellOrder : EcGameObject
         LastPrice = price;
         LastAmount = amount;
         LastValue = amount * price;
-        if (Active)
-        {
-            EcProductionOutputSector outputSector = GetGameObject<EcProductionOutputSector>(ownerOutputSectorId);
-            outputSector.ExecuteSell();
-        }
     }
 }

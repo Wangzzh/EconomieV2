@@ -4,6 +4,9 @@ using System;
 public partial class EcStorage : EcGameObject
 {
     [Export]
+    public string StorageName;
+    
+    [Export]
     public int ItemId;
 
     [Export]

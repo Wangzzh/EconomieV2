@@ -4,7 +4,13 @@ using System;
 public partial class EcPurchaseOrder : EcGameObject
 {
     [Export]
+    public int itemId;
+
+    [Export]
     public int ownerInputSectorId;
+
+    [Export]
+    public string purchaseOrderName = "Unnamed purchase";
 
     // This should be managed by market
     [Export]
@@ -28,7 +34,7 @@ public partial class EcPurchaseOrder : EcGameObject
 
     // This should be managed by output sector
     [Export]
-    public bool Active = true;
+    public bool Active = false;
     
     // This is invoked by the market to estimate price
 	public double GetPurchaseAmountAtPrice(double price)
@@ -46,10 +52,5 @@ public partial class EcPurchaseOrder : EcGameObject
         LastPrice = price;
         LastAmount = amount;
         LastValue = amount * price;
-        if (Active) 
-        {
-            EcProductionInputSector inputSector = GetGameObject<EcProductionInputSector>(ownerInputSectorId);
-            inputSector.ExecutePurchase();
-        }
     }
 }
